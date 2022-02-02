@@ -1,9 +1,9 @@
 import java.util.Arrays;
 import java.lang.Math;
-
+import java.io.*;
 public class BruteForce {
     public static void main(String[] args) {
-        int size = 2;
+        int size = 3;
         int limit = 15;
         int weights[];
         int value[];
@@ -27,7 +27,7 @@ public class BruteForce {
                 choose[j] = false;
             }
             for (j = 0; j < (N-1); ++j) {
-                if ((index & (j + 1)) > 0) {
+                if ((index & (j+1)) > 0) {
                     choose[j] = true;
                     }
                 }
