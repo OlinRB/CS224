@@ -13,11 +13,6 @@ public class BruteForce {
         optimize(weights, value, limit);
     }
 
-    public static boolean isKthBitSet(int n,
-                                   int k)
-    {
-        return (n & (1 << (k - 1))) > 0;
-    }
 
     public static void optimize(int weights[], int values[], int limit) {
         int N, index, j, x, val;
@@ -80,22 +75,4 @@ public class BruteForce {
         System.out.print(bestVal);
 
     }
-        public static void test() {
-            int N, index, j, x;
-            N = 2;
-            int end = (int) Math.pow(2, N);
-            for (index = 0; index < end-1 ; ++index) {
-                System.out.print("\n");
-                x = 1;
-                for (j = 0; j < (N-1); ++j) {
-                    System.out.print(index & x);
-                    System.out.print(" ");
-                    if (x == 0)
-                        x = 1;
-                    else
-                        x *= 2;
-                }
-
-            }
-        }
 }
