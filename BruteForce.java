@@ -31,17 +31,19 @@ public class BruteForce {
         int bestVal = 0;
         int totalValue = 0;
         int totalWeight = 0;
-        for (index = 0; index < end - 1; ++index) {
-            System.out.println(Arrays.toString(choose));
-            for (j = 0; j < (N - 1); ++j) {
+        for (index = 0; index < end; ++index) {
+            for (j = 0; j < (N); ++j) {
                 choose[j] = false;
             }
-            for (j = 0; j < (N - 1); ++j) {
-                val = (int) Math.pow((j-1),2);
+            for (j = 0; j < (N); ++j) {
+                val = (int) Math.pow(2, j);
                 if ((index & val) > 0) {
                     choose[j] = true;
                 }
             }
+            System.out.print(Arrays.toString(choose));
+            System.out.print(" Index: ");
+            System.out.println(index);
             for (j = 0; j < (N-1); ++j) {
                 if (choose[j])
                     totalValue += values[j];
@@ -61,13 +63,15 @@ public class BruteForce {
             // keep track of the best subset seen
         }
         System.out.print("Items ");
+        System.out.print("| ");
         for (j = 0; j < bestSub.length; ++j) {
             if (bestSub[j]) {
                 System.out.print(j);
-                System.out.print(" ");
+                System.out.print(", ");
 
             }
         }
+        System.out.print(" |");
         System.out.print("= ");
         System.out.print(bestVal);
 
