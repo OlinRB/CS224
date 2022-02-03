@@ -11,28 +11,48 @@ public class BruteForce {
         value = new int[size];
         optimize(weights, value, limit);
         //test();
+        //System.out.println(isKthBitSet(1,0));
+    }
+
+    public static boolean isKthBitSet(int n,
+                                   int k)
+    {
+        return (n & (1 << (k - 1))) > 0;
     }
 
     public static void optimize(int weights[], int values[], int limit) {
-        int N, index, j;
+        int N, index, j, x, val;
         N = weights.length;
         int end = (int) Math.pow(2, N);
         boolean choose[];
         boolean bestSub[];
         choose = new boolean[N];
-        bestSub = choose;
-        for (index = 0; index < end ; ++index) {
+        bestSub = new boolean[N];
+        int bestVal = 0;
+        int totalValue = 0;
+        int totalWeight = 0;
+        for (index = 0; index < end - 1; ++index) {
             System.out.println(Arrays.toString(choose));
-            for (j = 0; j < (N-1); ++j) {
+            for (j = 0; j < (N - 1); ++j) {
                 choose[j] = false;
             }
-            for (j = 0; j < (N-1); ++j) {
-                if ((index & (j+1)) > 0) {
+            for (j = 0; j < (N - 1); ++j) {
+                val = (int) Math.pow((j-1),2);
+                if ((index & val) > 0) {
                     choose[j] = true;
-                    }
                 }
             }
-
+            for (j = 0; j < (N-1); ++j) {
+                if (choose[j])
+                    totalValue += values[j];
+                    totalWeight += weights[j];
+            }
+            if (totalWeight < 16 && totalValue > bestVal) {
+                bestVal = totalValue;
+                bestSub = choose;
+            }
+            totalValue = 0;
+            totalWeight = 0;
 
             // now, build the ith subset of the items:
             // for j in 0 to N-1, include item j if choose[j] is true
@@ -40,13 +60,34 @@ public class BruteForce {
             // then compute the total value of the objects in the subset
             // keep track of the best subset seen
         }
-        public static void test() {
-            int i = 5;
-            System.out.println(i & (i+1));
+        System.out.print("Items ");
+        for (j = 0; j < bestSub.length; ++j) {
+            if (bestSub[j]) {
+                System.out.print(j);
+                System.out.print(" ");
 
-            int val = 1;
-            for (int j = 0; j <4; ++j){
-                System.out.println(j & val);
+            }
+        }
+        System.out.print("= ");
+        System.out.print(bestVal);
+
+    }
+        public static void test() {
+            int N, index, j, x;
+            N = 2;
+            int end = (int) Math.pow(2, N);
+            for (index = 0; index < end-1 ; ++index) {
+                System.out.print("\n");
+                x = 1;
+                for (j = 0; j < (N-1); ++j) {
+                    System.out.print(index & x);
+                    System.out.print(" ");
+                    if (x == 0)
+                        x = 1;
+                    else
+                        x *= 2;
+                }
+
             }
         }
 }
