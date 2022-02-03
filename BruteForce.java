@@ -52,6 +52,7 @@ public class BruteForce {
                     totalWeight += weights[j];
                 }
             }
+            // Bug below
             if (totalWeight < 16 && totalValue > bestVal) {
                 bestVal = totalValue;
                 bestSub = choose;
