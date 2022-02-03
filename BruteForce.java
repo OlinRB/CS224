@@ -5,13 +5,12 @@ public class BruteForce {
     public static void main(String[] args) {
         int size = 3;
         int limit = 15;
-        int weights[];
-        int value[];
-        weights = new int[size];
-        value = new int[size];
+        int weights[] = new int[]{5,3,7,3,4,12,9,4,5,2,6,7,1};
+        int value[] = new int[]{2,1,1,8,1,5,4,5,4,3,4,2,6};
+//        weights = new int[size];
+//        value = new int[size];
+
         optimize(weights, value, limit);
-        //test();
-        //System.out.println(isKthBitSet(1,0));
     }
 
     public static boolean isKthBitSet(int n,
@@ -22,6 +21,7 @@ public class BruteForce {
 
     public static void optimize(int weights[], int values[], int limit) {
         int N, index, j, x, val;
+        boolean debug = false;
         N = weights.length;
         int end = (int) Math.pow(2, N);
         boolean choose[];
@@ -41,13 +41,16 @@ public class BruteForce {
                     choose[j] = true;
                 }
             }
-            System.out.print(Arrays.toString(choose));
-            System.out.print(" Index: ");
-            System.out.println(index);
+            if (debug) {
+                System.out.print(Arrays.toString(choose));
+                System.out.print(" Index: ");
+                System.out.println(index);
+            }
             for (j = 0; j < (N-1); ++j) {
-                if (choose[j])
+                if (choose[j]) {
                     totalValue += values[j];
                     totalWeight += weights[j];
+                }
             }
             if (totalWeight < 16 && totalValue > bestVal) {
                 bestVal = totalValue;
@@ -66,12 +69,12 @@ public class BruteForce {
         System.out.print("| ");
         for (j = 0; j < bestSub.length; ++j) {
             if (bestSub[j]) {
-                System.out.print(j);
+                System.out.print(j+1);
                 System.out.print(", ");
 
             }
         }
-        System.out.print(" |");
+        System.out.print("|");
         System.out.print("= ");
         System.out.print(bestVal);
 
