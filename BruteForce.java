@@ -7,9 +7,6 @@ public class BruteForce {
         int limit = 15;
         int weights[] = new int[]{5,3,7,3,4,12,9,4,5,2,6,7,1};
         int value[] = new int[]{2,1,1,8,1,5,4,5,4,3,4,2,6};
-//        int weights[] = new int[]{5,3,7};
-//        int value[] = new int[]{2,1,1};
-
         optimize(weights, value, limit);
     }
 
