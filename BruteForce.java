@@ -7,6 +7,9 @@ public class BruteForce {
         int limit = 15;
         int weights[] = new int[]{5,3,7,3,4,12,9,4,5,2,6,7,1};
         int value[] = new int[]{2,1,1,8,1,5,4,5,4,3,4,2,6};
+//        int weights[] = new int[]{5,3,7};
+//        int value[] = new int[]{2,1,1};
+
         optimize(weights, value, limit);
     }
 
@@ -21,6 +24,7 @@ public class BruteForce {
         choose = new boolean[N];
         bestSub = new boolean[N];
         int bestVal = 0;
+        int tWeight = 0;
         int totalValue = 0;
         int totalWeight = 0;
         for (index = 0; index < end; ++index) {
@@ -48,12 +52,12 @@ public class BruteForce {
             // Issue is in the copy best subset statement within if
             // I dont know how to deep copy a C style list so just going
             // to iterate through
-            if (totalWeight < limit && totalValue > bestVal) {
+            if (totalWeight <= limit && totalValue >= bestVal) {
                 bestVal = totalValue;
+                tWeight = totalWeight;
                 for (j = 0; j < choose.length; ++j) {
                     bestSub[j] = choose[j];
                 }
-
             }
             totalValue = 0;
             totalWeight = 0;
@@ -64,18 +68,14 @@ public class BruteForce {
             // then compute the total value of the objects in the subset
             // keep track of the best subset seen
         }
-        System.out.print("Items ");
-        System.out.print("| ");
+        
+        
         for (j = 0; j < bestSub.length; ++j) {
             if (bestSub[j]) {
-                System.out.print(j+1);
-                System.out.print(", ");
-
+            	System.out.println("Item: " + (j+1) + " \tWeight: " + (weights[j]) + " \tValue: " + (values[j]));
             }
         }
-        System.out.print("|");
-        System.out.print("= ");
-        System.out.print(bestVal);
-
+        
+        System.out.print("Total Weight: " + tWeight + " | Total Value: " + bestVal);
     }
 }
