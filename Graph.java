@@ -42,9 +42,10 @@ public class Graph {
   }
 
   public boolean topoOrder() {
-    int i;
-    Node startingNode;
+    int i, startingNodeIndex;
     // Base case for recursion
+    if (nodes.size() == 0)
+      return true;
 
     // Find starting node(s)
     for (i = 0; i < nodes.size(); ++i) {
@@ -53,13 +54,12 @@ public class Graph {
       System.out.print(": #incoming edges from active nodes = ");
       System.out.println(nodes.get(i).adjlistIn.size());
       if (nodes.get(i).adjlistIn.size() == 0) {
-        startingNode = nodes.get(i);
+        startingNodeIndex = i;
       }
     }
-
-    // Order it first and delete from graph along with edges that come from it
-
+    nodes.remove(i);
     // Repeat process on rest of graph with now less edges
+    topoOrder();
 
     // Every edge goes from lower val node to higher val node
 
