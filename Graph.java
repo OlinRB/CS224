@@ -49,7 +49,7 @@ public class Graph {
       System.out.print("node ");
       System.out.print(nodes.get(i).toString());
       System.out.print(": #incoming edges from active nodes = ");
-      System.out.println(nodes.get(i).adjlistIn.size());
+      System.out.println(nodes.get(i).numInFromActive);
     }
 
 
