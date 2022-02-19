@@ -51,6 +51,7 @@ public class Graph {
       System.out.print(": #incoming edges from active nodes = ");
       System.out.println(nodes.get(i).numInFromActive);
       // Set all nodes to active that remain in the graph
+      nodes.get(i).active = true;
     }
     // Base case for recursion
     if (nodes.size() == 0)
@@ -65,7 +66,7 @@ public class Graph {
           ++cnt;
       }
       nodes.get(i).numInFromActive = cnt;
-      // Determine set S start nodes
+      // Delete start node and call recursively
       if (nodes.get(i).numInFromActive == 0) {
         System.out.print("Removing node: ");
         System.out.println(nodes.get(i).toString());
