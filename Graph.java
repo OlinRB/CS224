@@ -43,15 +43,27 @@ public class Graph {
 
   public boolean topoOrder() {
     int i, startingNodeIndex;
+    // Determine incoming active edges
+    // Set number of incoming edges from active nodes
+
     // Print each iteration
     for (i = 0; i < nodes.size(); ++i) {
+      int cnt = 0;
+      for (int j = 0; j < nodes.get(i).adjlistIn.size(); ++j) {
+        //System.out.println(nodes.get(i).adjlistIn.get(j).active);
+        if (nodes.get(i).adjlistIn.get(j).active)
+          ++cnt;
+      }
+      nodes.get(i).numInFromActive = cnt;
       // Print out results of edges from graph
       System.out.print("node ");
       System.out.print(nodes.get(i).toString());
       System.out.print(": #incoming edges from active nodes = ");
       System.out.println(nodes.get(i).numInFromActive);
+      //System.out.println(nodes.get(i).adjlistIn.size());
       // Set all nodes to active that remain in the graph
       nodes.get(i).active = true;
+      //System.out.println(nodes.get(i).active);
     }
     // Base case for recursion
     if (nodes.size() == 0)
@@ -59,13 +71,6 @@ public class Graph {
 
     // Find starting node(s)
     for (i = 0; i < nodes.size(); ++i) {
-      // Set number of incoming edges from active nodes
-      int cnt = 0;
-      for (int j = 0; j < nodes.get(i).adjlistIn.size(); ++j) {
-        if (nodes.get(i).adjlistIn.get(j).active)
-          ++cnt;
-      }
-      nodes.get(i).numInFromActive = cnt;
       // Delete start node and call recursively
       if (nodes.get(i).numInFromActive == 0) {
         System.out.print("Removing node: ");
@@ -74,13 +79,7 @@ public class Graph {
         nodes.remove(i);
         topoOrder();
       }
-
-
     }
-
-    // Every edge goes from lower val node to higher val node
-
-    // If list of nodes is not zero return false
     return false;
   }
 }
