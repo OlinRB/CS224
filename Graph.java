@@ -50,7 +50,6 @@ public class Graph {
     for (i = 0; i < nodes.size(); ++i) {
       int cnt = 0;
       for (int j = 0; j < nodes.get(i).adjlistIn.size(); ++j) {
-        //System.out.println(nodes.get(i).adjlistIn.get(j).active);
         if (nodes.get(i).adjlistIn.get(j).active)
           ++cnt;
       }
@@ -80,6 +79,7 @@ public class Graph {
         topoOrder();
       }
     }
+    System.out.println("No topological order exits");
     return false;
   }
 }
