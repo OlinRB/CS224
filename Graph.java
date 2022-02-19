@@ -42,7 +42,22 @@ public class Graph {
   }
 
   public boolean topoOrder() {
+    int i;
+    // Find starting node(s)
+
+    // Order it first and delete from graph along with edges that come from it
+
+    // Repeat process on rest of graph with now less edges
+
+    // Every edge goes from lower val node to higher val node
+
+    // If list of nodes is not zero return false
+
+
+
+    for (i = 0; i < nodes.size(); ++i) {
+      System.out.println(nodes);
+    }
     return false;
-    // implement this
   }
 }
