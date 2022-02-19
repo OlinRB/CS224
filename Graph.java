@@ -62,14 +62,13 @@ public class Graph {
       //System.out.println(nodes.get(i).adjlistIn.size());
       // Set all nodes to active that remain in the graph
       nodes.get(i).active = true;
-      //System.out.println(nodes.get(i).active);
     }
+
     // Base case for recursion
     if (nodes.size() == 0) {
       System.out.println("Topo found");
       return true;
     }
-
     // Find starting node(s)
     for (i = 0; i < nodes.size(); ++i) {
       // Delete start node and call recursively
@@ -81,7 +80,10 @@ public class Graph {
         topoOrder();
       }
     }
-    System.out.println("No topological order exits");
+
+//    if (nodes.size() != 0)
+//      System.out.println("No topological order exits");
+
     return false;
   }
 }
