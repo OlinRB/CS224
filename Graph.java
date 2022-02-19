@@ -50,29 +50,21 @@ public class Graph {
       System.out.print(nodes.get(i).toString());
       System.out.print(": #incoming edges from active nodes = ");
       System.out.println(nodes.get(i).numInFromActive);
+      // Set all nodes to active that remain in the graph
     }
-
-
     // Base case for recursion
     if (nodes.size() == 0)
       return true;
 
     // Find starting node(s)
     for (i = 0; i < nodes.size(); ++i) {
-
-      // Set all nodes to active that remain in the graph
-      nodes.get(i).active = true;
-      for (int j = 0; j < nodes.get(i).adjlistIn.size(); ++j) {
-        if (nodes.get(i).adjlistIn.get(j).active)
-          nodes.get(i).numInFromActive = 0;
-      }
       // Set number of incoming edges from active nodes
-      // Need to update when node deleted?
+      int cnt = 0;
       for (int j = 0; j < nodes.get(i).adjlistIn.size(); ++j) {
         if (nodes.get(i).adjlistIn.get(j).active)
-          nodes.get(i).numInFromActive += 1;
+          ++cnt;
       }
-
+      nodes.get(i).numInFromActive = cnt;
       // Determine set S start nodes
       if (nodes.get(i).numInFromActive == 0) {
         System.out.print("Removing node: ");
