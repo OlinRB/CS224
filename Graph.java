@@ -65,8 +65,10 @@ public class Graph {
       //System.out.println(nodes.get(i).active);
     }
     // Base case for recursion
-    if (nodes.size() == 0)
+    if (nodes.size() == 0) {
+      System.out.println("Topo found");
       return true;
+    }
 
     // Find starting node(s)
     for (i = 0; i < nodes.size(); ++i) {
