@@ -38,7 +38,7 @@ public class Main {
     G.addEdge(n5, n7);
     G.addEdge(n6, n7);
 
-    G.print();
+    //G.print();
 
     G.topoOrder();
   }

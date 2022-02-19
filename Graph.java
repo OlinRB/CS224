@@ -43,7 +43,19 @@ public class Graph {
 
   public boolean topoOrder() {
     int i;
+    Node startingNode;
+    // Base case for recursion
+
     // Find starting node(s)
+    for (i = 0; i < nodes.size(); ++i) {
+      System.out.print("node ");
+      System.out.print(nodes.get(i).toString());
+      System.out.print(": #incoming edges from active nodes = ");
+      System.out.println(nodes.get(i).adjlistIn.size());
+      if (nodes.get(i).adjlistIn.size() == 0) {
+        startingNode = nodes.get(i);
+      }
+    }
 
     // Order it first and delete from graph along with edges that come from it
 
@@ -52,12 +64,6 @@ public class Graph {
     // Every edge goes from lower val node to higher val node
 
     // If list of nodes is not zero return false
-
-
-
-    for (i = 0; i < nodes.size(); ++i) {
-      System.out.println(nodes);
-    }
     return false;
   }
 }
