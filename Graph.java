@@ -64,15 +64,12 @@ public class Graph {
       nodes.get(i).active = true;
     }
 
-    // Base case for recursion
-    if (nodes.size() == 0) {
-      System.out.println("Topo found");
-      return true;
-    }
     // Find starting node(s)
+    int active = 0;
     for (i = 0; i < nodes.size(); ++i) {
       // Delete start node and call recursively
       if (nodes.get(i).numInFromActive == 0) {
+        ++active;
         System.out.print("Removing node: ");
         System.out.println(nodes.get(i).toString());
         nodes.get(i).active = false;
@@ -81,9 +78,59 @@ public class Graph {
       }
     }
 
+    // Base case for recursion
+    if (nodes.size() != 0) {
+      System.out.println("No topological order exits");
+      return false;
+    }
+    else
+      return true;
+  }
+
+//  public boolean topoOrder() {
+//    int i, startingNodeIndex;
+//    // Determine incoming active edges
+//    // Set number of incoming edges from active nodes
+//    while (nodes.size() > 0) {
+//      // Print each iteration
+//      for (i = 0; i < nodes.size(); ++i) {
+//        int cnt = 0;
+//        for (int j = 0; j < nodes.get(i).adjlistIn.size(); ++j) {
+//          if (nodes.get(i).adjlistIn.get(j).active)
+//            ++cnt;
+//        }
+//        nodes.get(i).numInFromActive = cnt;
+//        // Print out results of edges from graph
+//        System.out.print("node ");
+//        System.out.print(nodes.get(i).toString());
+//        System.out.print(": #incoming edges from active nodes = ");
+//        System.out.println(nodes.get(i).numInFromActive);
+//        //System.out.println(nodes.get(i).adjlistIn.size());
+//        // Set all nodes to active that remain in the graph
+//        nodes.get(i).active = true;
+//      }
+//
+////      // Base case for recursion
+////      if (nodes.size() == 0) {
+////        System.out.println("Topo found");
+////        return true;
+////      }
+//      // Find starting node(s)
+//      for (i = 0; i < nodes.size(); ++i) {
+//        // Delete start node and call recursively
+//        if (nodes.get(i).numInFromActive == 0) {
+//          System.out.print("Removing node: ");
+//          System.out.println(nodes.get(i).toString());
+//          nodes.get(i).active = false;
+//          nodes.remove(i);
+//          //        topoOrder();
+//        }
+//      }
+//    }
+//
 //    if (nodes.size() != 0)
 //      System.out.println("No topological order exits");
-
-    return false;
-  }
+//
+//    return false;
+//  }
 }
