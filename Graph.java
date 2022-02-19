@@ -49,13 +49,21 @@ public class Graph {
 
     // Find starting node(s)
     for (i = 0; i < nodes.size(); ++i) {
+      // Set all nodes to active that remain in the graph
+      nodes.get(i).active = true;
+      // Set number of incoming edges from active nodes
+      // Need to update when node deleted?
+      nodes.get(i).numInFromActive = nodes.get(i).adjlistIn.size();
+      // Determine set S start nodes
+      if (nodes.get(i).adjlistIn.size() == 0) {
+        startingNodeIndex = i;
+      }
+
+      // Print out results of edges from graph
       System.out.print("node ");
       System.out.print(nodes.get(i).toString());
       System.out.print(": #incoming edges from active nodes = ");
       System.out.println(nodes.get(i).adjlistIn.size());
-      if (nodes.get(i).adjlistIn.size() == 0) {
-        startingNodeIndex = i;
-      }
     }
     nodes.remove(i);
     // Repeat process on rest of graph with now less edges
