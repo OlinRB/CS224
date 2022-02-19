@@ -1,7 +1,7 @@
 public class Main {
   public static void main(String argv[]) {
     testOne();
-  testTwo();
+  //testTwo();
   }
 
   //-------------------------------------------------------
@@ -40,7 +40,7 @@ public class Main {
 
     //G.print();
 
-    G.topoOrder();
+    System.out.println(G.topoOrder());
   }
 
   //-------------------------------------------------------
@@ -79,6 +79,6 @@ public class Main {
 
     G.print();
 
-    G.topoOrder();
+    System.out.println(G.topoOrder());
   }
 }
