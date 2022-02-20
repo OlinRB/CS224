@@ -70,12 +70,14 @@ public class Graph {
       // Determine incoming active edges and
       // Set number of incoming edges from active nodes
       nodes.get(i).numInFromActive = countInEdges(i);
+      if (nodes.get(i).numInFromActive == 0)
+        noIncomingEdges.add(nodes.get(i));
       // Print out results of edges from graph
       printNode(i);
       // Set all nodes to active that remain in the graph
       nodes.get(i).active = true;
     }
-
+    System.out.println(noIncomingEdges);
     // Find starting node(s)
     boolean active = false;
     for (i = 0; i < nodes.size(); ++i) {
@@ -101,55 +103,3 @@ public class Graph {
   }
 }
 
-
-//  public boolean topoOrder() {
-//
-//    int i;
-//    // Determine incoming active edges
-//    // Set number of incoming edges from active nodes
-//
-//    for (i = 0; i < numActive; ++i) {
-//        if (nodes.get(i).active && nodes.get(i).adjlistIn.size() == 0)
-//          noIncomingEdges.add(nodes.get(i));
-//
-//
-//
-//
-////      int cnt = 0;
-////      for (int j = 0; j < nodes.get(i).adjlistIn.size(); ++j) {
-////        if (nodes.get(i).adjlistIn.get(j).active)
-////          ++cnt;
-////      }
-////      nodes.get(i).numInFromActive = cnt;
-//      // Print out results of edges from graph
-//      printNode(i);
-//      // Set all nodes to active that remain in the graph
-//      nodes.get(i).active = true;
-//    }
-//
-//    // Find starting node(s)
-//    boolean active = false;
-//    for (i = 0; i < nodes.size(); ++i) {
-//      // Delete start node and call recursively
-//      if (nodes.get(i).numInFromActive == 0 && !active) {
-//        active = true;
-//        System.out.print("Removing node: ");
-//        System.out.println(nodes.get(i).toString());
-//        nodes.get(i).active = false;
-//        topOrder.add(i);
-//        nodes.remove(i);
-//        --numActive;
-//      }
-//    }
-//    // Recursively call if conditions not met
-//    if (!active && nodes.size() != 0) {
-//      notCycle = false;
-//      System.out.println("\n<No topological order found>");
-//    }
-//
-//    if (active && nodes.size() != 0) {
-//      topoOrder();
-//    }
-//    return notCycle;
-//  }
-//}
