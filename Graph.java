@@ -5,6 +5,7 @@ public class Graph {
   ArrayList<Node> noIncomingEdges = new ArrayList<Node>();
   ArrayList<Integer> topOrder = new ArrayList<Integer>();
   boolean notCycle = true;
+  boolean end = false;
   int numActive = 0;
 
   public Graph() {
@@ -60,6 +61,15 @@ public class Graph {
     System.out.print(": #incoming edges from active nodes = ");
     System.out.println(nodes.get(index).numInFromActive);
   }
+  public void printTopo() {
+    if (!end) {
+      System.out.print("Topological Order: ");
+      for (Node node : noIncomingEdges) {
+        System.out.print(node.name);
+        System.out.print("->");
+      }
+    }
+  }
 
   public boolean topoOrder() {
 
@@ -71,13 +81,13 @@ public class Graph {
       // Set number of incoming edges from active nodes
       nodes.get(i).numInFromActive = countInEdges(i);
       if (nodes.get(i).numInFromActive == 0)
-        noIncomingEdges.add(nodes.get(i));
+        if (!noIncomingEdges.contains(nodes.get(i)))
+          noIncomingEdges.add(nodes.get(i));
       // Print out results of edges from graph
       printNode(i);
       // Set all nodes to active that remain in the graph
       nodes.get(i).active = true;
     }
-    System.out.println(noIncomingEdges);
     // Find starting node(s)
     boolean active = false;
     for (i = 0; i < nodes.size(); ++i) {
@@ -94,11 +104,15 @@ public class Graph {
     if (!active && nodes.size() != 0) {
       notCycle = false;
       System.out.println("\n<------No topological order found------>");
+
     }
 
     if (active && nodes.size() != 0) {
       topoOrder();
     }
+    if (active && nodes.size() == 0)
+      printTopo();
+      end = true;
     return notCycle;
   }
 }
