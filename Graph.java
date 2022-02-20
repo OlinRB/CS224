@@ -91,10 +91,10 @@ public class Graph {
 
   public boolean topoOrder() {
     int i, iterator = 0;
-
-    boolean topoOrder = true;
-    ArrayList<Node> cpySet = new ArrayList<Node>();
-    // Determine incoming active edges
+    // Set all nodes initially as active.
+    for (Node node : nodes) {
+      node.active = true;
+    }
     // Set number of incoming edges from active nodes
     while (iterator < nodes.size()) {
       for (i = 0; i < nodes.size(); ++i) {
@@ -102,9 +102,9 @@ public class Graph {
         int cnt = 0;
         // Count number of incoming edges and assign
         for (int j = 0; j < nodes.get(i).adjlistIn.size(); ++j) {
-          //if (nodes.get(i).active)
-          if (nodes.get(i).adjlistIn.get(j).active)
-            ++cnt;
+          if (nodes.get(i).active)
+            if (nodes.get(i).adjlistIn.get(j).active)
+              ++cnt;
         }
         nodes.get(i).numInFromActive = cnt;
         // Print out results of edges from graph
@@ -125,6 +125,10 @@ public class Graph {
           System.out.print("Removing node: ");
           System.out.println(nodes.get(i).toString());
           nodes.get(i).active = false;
+          for (Node node : nodes.get(i).adjlistIn) {
+            if (nodes.get(i).adjlistIn.contains(node))
+              --node.numInFromActive;
+          }
           iterator++;
         }
       }
