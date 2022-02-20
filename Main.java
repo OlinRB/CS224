@@ -40,7 +40,7 @@ public class Main {
 
     //G.print();
 
-    System.out.println(G.topoOrder());
+    G.topoOrder();
   }
 
   //-------------------------------------------------------
@@ -79,6 +79,6 @@ public class Main {
 
     G.print();
 
-    System.out.println(G.topoOrder());
+    G.topoOrder();
   }
 }

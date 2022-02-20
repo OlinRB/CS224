@@ -4,18 +4,13 @@ import java.util.ArrayList;
 
 public class Graph {
   ArrayList<Node> nodes;
-  ArrayList<Node> noIncomingEdges = new ArrayList<Node>();
-  ArrayList<Integer> topOrder = new ArrayList<Integer>();
-  boolean notCycle = true;
-  boolean end = false;
-  int numActive = 0;
+  ArrayList<Node> visited = new ArrayList<>();
 
   public Graph() {
     this.nodes = new ArrayList<Node>();
   }
 
   public void addNode(Node n) {
-    ++numActive;
     this.nodes.add(n);
   }
 
@@ -57,71 +52,64 @@ public class Graph {
     return cnt;
   }
 
-  public void printNode(int index) {
-    System.out.print("node ");
-    System.out.print(nodes.get(index).toString());
-    System.out.print(": #incoming edges from active nodes = ");
-    System.out.println(nodes.get(index).numInFromActive);
+  public void printNodes() {
+    for (int i = 0; i < nodes.size(); ++i) {
+      if (nodes.get(i).active) {
+        System.out.print("node ");
+        System.out.print(nodes.get(i).toString());
+        System.out.print(": #incoming edges from active nodes = ");
+        System.out.println(countInEdges(i));
+      }
+    }
+    System.out.println("\n");
   }
   // V2 Non recursive implementation
-  public void printTopo() {
-    if (!end) {
-      int maxLen = noIncomingEdges.size();
-      int i = 0;
-      System.out.print("Topological Order: ");
-      for (Node node : noIncomingEdges) {
-        ++i;
-        System.out.print(node.name);
-        if (i < maxLen)
-          System.out.print("->");
-      }
-      System.out.print("\n");
+  public void makeActive() {
+    for (Node node : nodes) {
+      if (!visited.contains(node))
+        node.active = true;
     }
+  }
+  public ArrayList <Node> startNodes() {
+    ArrayList <Node> startNodes = new ArrayList<>();
+    for (int i = 0; i < nodes.size(); ++i) {
+      if (countInEdges(i) == 0 && nodes.get(i).active)
+        startNodes.add(nodes.get(i));
+    }
+    return startNodes;
+
+  }
+  boolean checkActive() {
+    boolean nonCycle = true;
+    for (Node nodes : nodes) {
+      if (nodes.active)
+        nonCycle = false;
+    }
+    return nonCycle;
   }
 
   public boolean topoOrder() {
+    // Begin by setting all nodes to active
+    makeActive();
 
-    int i;
-    boolean result = true;
-    for (i = 0; i < nodes.size(); ++i) {
-      int cnt = 0;
-      // Determine incoming active edges and
-      // Set number of incoming edges from active nodes
-      nodes.get(i).numInFromActive = countInEdges(i);
-      if (nodes.get(i).numInFromActive == 0)
-        if (!noIncomingEdges.contains(nodes.get(i)))
-          noIncomingEdges.add(nodes.get(i));
-      // Print out results of edges from graph
-      printNode(i);
-      // Set all nodes to active that remain in the graph
-      nodes.get(i).active = true;
+    // While some nodes have no incoming edges
+    while (startNodes().size() != 0) {
+      printNodes();
+      visited.add(startNodes().get(0));
+      startNodes().get(0).active = false;
     }
-    // Find starting node(s)
-    boolean active = false;
-    for (i = 0; i < nodes.size(); ++i) {
-      // Delete start node and call recursively
-      if (nodes.get(i).numInFromActive == 0 && !active) {
-        active = true;
-        System.out.print("Removing node: ");
-        System.out.println(nodes.get(i).toString());
-        nodes.get(i).active = false;
-        nodes.remove(i);
+    boolean nonCycle = checkActive();
+    if (nonCycle) {
+      System.out.print("Topological Order: ");
+      for (Node node: visited) {
+        System.out.print(node);
+        System.out.print(" ");
       }
+      System.out.println("\n");
+    } else {
+      System.out.print("No Topological Order Found");
     }
-    // Recursively call if conditions not met
-    if (!active && nodes.size() != 0) {
-      notCycle = false;
-      System.out.println("\n<------No topological order found------>");
-
-    }
-
-    if (active && nodes.size() != 0) {
-      topoOrder();
-    }
-    if (active && nodes.size() == 0)
-      printTopo();
-      end = true;
-    return notCycle;
+    return nonCycle;
   }
 }
 
