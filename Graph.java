@@ -63,11 +63,16 @@ public class Graph {
   }
   public void printTopo() {
     if (!end) {
+      int maxLen = noIncomingEdges.size();
+      int i = 0;
       System.out.print("Topological Order: ");
       for (Node node : noIncomingEdges) {
+        ++i;
         System.out.print(node.name);
-        System.out.print("->");
+        if (i < maxLen)
+          System.out.print("->");
       }
+      System.out.print("\n");
     }
   }
 
