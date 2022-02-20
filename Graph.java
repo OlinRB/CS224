@@ -63,6 +63,7 @@ public class Graph {
     System.out.print(": #incoming edges from active nodes = ");
     System.out.println(nodes.get(index).numInFromActive);
   }
+  // V2 Non recursive implementation
   public void printTopo() {
     if (!end) {
       int maxLen = noIncomingEdges.size();
