@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 
+// Authors: Olin Ruppert-Bousquet / Nick Hanna
+
 public class Graph {
   ArrayList<Node> nodes;
   ArrayList<Node> noIncomingEdges = new ArrayList<Node>();
