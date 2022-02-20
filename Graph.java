@@ -63,13 +63,13 @@ public class Graph {
     }
     System.out.println("\n");
   }
-  // V2 Non recursive implementation
   public void makeActive() {
     for (Node node : nodes) {
       if (!visited.contains(node))
         node.active = true;
     }
   }
+  // Send list of starting nodes
   public ArrayList <Node> startNodes() {
     ArrayList <Node> startNodes = new ArrayList<>();
     for (int i = 0; i < nodes.size(); ++i) {
@@ -87,17 +87,20 @@ public class Graph {
     }
     return nonCycle;
   }
-
+  // V2 Non recursive implementation
   public boolean topoOrder() {
     // Begin by setting all nodes to active
     makeActive();
 
     // While some nodes have no incoming edges
+    // Print and loop
     while (startNodes().size() != 0) {
       printNodes();
+      // Add node to seen and remove it
       visited.add(startNodes().get(0));
       startNodes().get(0).active = false;
     }
+    // Check if graph is cycle
     boolean nonCycle = checkActive();
     if (nonCycle) {
       System.out.print("Topological Order: ");
