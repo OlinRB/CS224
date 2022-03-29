@@ -4,9 +4,9 @@
 public class Main {
     public static void main(String argv[]) {
         Object rtnval[] = testOne();
-//  Object rtnval[] = testTwo();
-//  Object rtnval[] = testThree();
-
+////  Object rtnval[] = testTwo();
+////  Object rtnval[] = testThree();
+//
         int arr[] = (int[]) rtnval[1];
         int numInversions = (int) rtnval[0];
         System.out.println("# inversions = " + numInversions);
@@ -27,7 +27,7 @@ public class Main {
         // fill this in
         int inversionCount = 0;
         int mergedList[] = new int[2];
-        if (values.length > 2) {
+        if (values.length > 1) {
             // Divide list in half
             int mid = values.length/2;
             int A[] = new int[mid];
@@ -41,7 +41,8 @@ public class Main {
             Object resultA[] = sortAndCount(A);
             inversionCount += (int) resultA[0];
             A = (int[]) resultA[1];
-            Object resultB[] = sortAndCount(A);
+
+            Object resultB[] = sortAndCount(B);
             inversionCount += (int) resultB[0];
             B = (int[]) resultB[1];
 
@@ -50,7 +51,7 @@ public class Main {
             inversionCount += (int) result[0];
             mergedList = (int[]) result[1];
         }
-        Object result[] = {inversionCount, values};
+        Object result[] = {inversionCount, mergedList};
         return result;
     }
 
