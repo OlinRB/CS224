@@ -14,14 +14,80 @@ public class Main {
         for (int i=0; i<arr.length; ++i)
             System.out.print(" " + arr[i]);
         System.out.println("]");
+//        int A[] = {1,3};
+//        int B[] = {2,4,5};
+//        Object test[] = mergeAndCount(A,B);
+//        int arr[] = (int[]) test[1];
+//        for (int i = 0; i < arr.length; ++i) {
+//            System.out.print(arr[i]);
+//        }
     }
 
     public static Object[] sortAndCount(int values[]) {
         // fill this in
+        int inversionCount = 0;
+        int mergedList[] = new int[2];
+        if (values.length > 2) {
+            // Divide list in half
+            int mid = values.length/2;
+            int A[] = new int[mid];
+            int B[] = new int[values.length-mid];
+            for (int i = 0; i < mid; ++i)
+                A[i] = values[i];
+            for (int i = mid+1; i < values.length; ++i)
+                B[i-mid] = values[i];
+
+            // Sort and count on each half
+            Object resultA[] = sortAndCount(A);
+            inversionCount += (int) resultA[0];
+            A = (int[]) resultA[1];
+            Object resultB[] = sortAndCount(A);
+            inversionCount += (int) resultB[0];
+            B = (int[]) resultB[1];
+
+            // Merge and count on product
+            Object result[] = mergeAndCount(A,B);
+            inversionCount += (int) result[0];
+            mergedList = (int[]) result[1];
+        }
+        Object result[] = {inversionCount, values};
+        return result;
     }
 
     public static Object[] mergeAndCount(int A[], int B[]) {
         // fill this in
+        int numInversions = 0;
+        int mergedArr[] = new int[A.length + B.length];
+        int indexA = 0;
+        int indexB = 0;
+        int mergedIndex = 0;
+        while (indexA < A.length && indexB < B.length) {
+            if (A[indexA] < B[indexB]) {
+                mergedArr[mergedIndex] = A[indexA];
+                ++indexA;
+            } else {
+                mergedArr[mergedIndex] = B[indexB];
+                ++indexB;
+                ++numInversions;
+            }
+            ++mergedIndex;
+        }
+        while (indexA < A.length) {
+            mergedArr[mergedIndex] = A[indexA];
+            ++indexA;
+            ++mergedIndex;
+        }
+        while (indexB < B.length) {
+            mergedArr[mergedIndex] = B[indexB];
+            ++indexB;
+            ++mergedIndex;
+        }
+
+        Object result[] = new Object[2];
+        result[0] = numInversions;
+        result[1] = mergedArr;
+        return result;
+
     }
 
     public static Object[] testOne() {
