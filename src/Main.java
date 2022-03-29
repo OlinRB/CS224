@@ -14,13 +14,15 @@ public class Main {
         for (int i=0; i<arr.length; ++i)
             System.out.print(" " + arr[i]);
         System.out.println("]");
+        ////////////////////////////////////
 //        int A[] = {1,3};
 //        int B[] = {2,4,5};
 //        Object test[] = mergeAndCount(A,B);
-//        int arr[] = (int[]) test[1];
-//        for (int i = 0; i < arr.length; ++i) {
-//            System.out.print(arr[i]);
+//        int arr1[] = (int[]) test[1];
+//        for (int i = 0; i < arr.length-1; ++i) {
+//            System.out.print(arr1[i]);
 //        }
+//        /////////////////////////////////////
     }
 
     public static Object[] sortAndCount(int values[]) {
@@ -34,8 +36,9 @@ public class Main {
             int B[] = new int[values.length-mid];
             for (int i = 0; i < mid; ++i)
                 A[i] = values[i];
-            for (int i = mid+1; i < values.length; ++i)
+            for (int i = mid; i < values.length; ++i)
                 B[i-mid] = values[i];
+
 
             // Sort and count on each half
             Object resultA[] = sortAndCount(A);
@@ -47,11 +50,19 @@ public class Main {
             B = (int[]) resultB[1];
 
             // Merge and count on product
+            System.out.print("A = ");
+            for (int i = 0; i < A.length; ++i)
+                System.out.print(A[i]);
+            System.out.println("");
+            System.out.print("B = ");
+            for (int i = 0; i < B.length; ++i)
+                System.out.print(B[i]);
+            System.out.println("");
             Object result[] = mergeAndCount(A,B);
             inversionCount += (int) result[0];
             mergedList = (int[]) result[1];
         }
-        Object result[] = {inversionCount, mergedList};
+        Object result[] = {inversionCount, values};
         return result;
     }
 
