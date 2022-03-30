@@ -14,15 +14,15 @@ public class Main {
         for (int i=0; i<arr.length; ++i)
             System.out.print(" " + arr[i]);
         System.out.println("]");
-        ////////////////////////////////////
-//        int A[] = {1,3};
-//        int B[] = {2,4,5};
-//        Object test[] = mergeAndCount(A,B);
-//        int arr1[] = (int[]) test[1];
-//        for (int i = 0; i < arr.length-1; ++i) {
-//            System.out.print(arr1[i]);
-//        }
-//        /////////////////////////////////////
+        //////////////////////////////////
+        int A[] = {8,7};
+        int B[] = {6,5};
+        Object test[] = mergeAndCount(A,B);
+        int arr1[] = (int[]) test[1];
+        for (int i = 0; i < arr1.length; ++i) {
+            System.out.print(arr1[i]);
+        }
+        /////////////////////////////////////
     }
 
     public static Object[] sortAndCount(int values[]) {
@@ -62,6 +62,11 @@ public class Main {
             Object result[] = mergeAndCount(A,B);
             inversionCount += (int) result[0];
             mergedList = (int[]) result[1];
+            System.out.print("Merged in sortCount = ");
+            for (int i = 0; i < mergedList.length; ++i)
+                System.out.print(mergedList[i]);
+            System.out.println("");
+
 
         }
         Object result[] = {inversionCount, mergedList};
@@ -96,10 +101,14 @@ public class Main {
             ++indexB;
             ++mergedIndex;
         }
-
+        System.out.print("Merged in Merge = ");
+        for (int i = 0; i < mergedArr.length; ++i)
+            System.out.print(mergedArr[i]);
+        System.out.println("");
         Object result[] = new Object[2];
         result[0] = numInversions;
         result[1] = mergedArr;
+
         return result;
 
     }
