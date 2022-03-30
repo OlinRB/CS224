@@ -43,26 +43,28 @@ public class Main {
             // Sort and count on each half
             Object resultA[] = sortAndCount(A);
             inversionCount += (int) resultA[0];
-            A = (int[]) resultA[1];
+            //A = (int[]) resultA[1];
 
             Object resultB[] = sortAndCount(B);
             inversionCount += (int) resultB[0];
-            B = (int[]) resultB[1];
+            //B = (int[]) resultB[1];
 
             // Merge and count on product
-            System.out.print("A = ");
-            for (int i = 0; i < A.length; ++i)
-                System.out.print(A[i]);
-            System.out.println("");
-            System.out.print("B = ");
-            for (int i = 0; i < B.length; ++i)
-                System.out.print(B[i]);
-            System.out.println("");
+//            System.out.print("A = ");
+//            for (int i = 0; i < A.length; ++i)
+//                System.out.print(A[i]);
+//            System.out.println("");
+//            System.out.print("B = ");
+//            for (int i = 0; i < B.length; ++i)
+//                System.out.print(B[i]);
+//            System.out.println("");
+//
             Object result[] = mergeAndCount(A,B);
             inversionCount += (int) result[0];
             mergedList = (int[]) result[1];
+
         }
-        Object result[] = {inversionCount, values};
+        Object result[] = {inversionCount, mergedList};
         return result;
     }
 
