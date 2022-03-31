@@ -3,9 +3,9 @@
 
 public class Main {
     public static void main(String argv[]) {
-        Object rtnval[] = testOne();
+//        Object rtnval[] = testOne();
 //  Object rtnval[] = testTwo();
-////  Object rtnval[] = testThree();
+  Object rtnval[] = testThree();
 //
         int arr[] = (int[]) rtnval[1];
         int numInversions = (int) rtnval[0];
@@ -14,7 +14,7 @@ public class Main {
         for (int i=0; i<arr.length; ++i)
             System.out.print(" " + arr[i]);
         System.out.println("]");
-        //////////////////////////////////
+        ////////// MergeTest /////////////
 //        int A[] = {8,7};
 //        int B[] = {6,5};
 //        Object test[] = mergeAndCount(A,B);
@@ -42,32 +42,19 @@ public class Main {
 
             // Sort and count on each half
             Object resultA[] = sortAndCount(A);
-            ++inversionCount;
+//            ++inversionCount;
             inversionCount += (int) resultA[0];
             A = (int[]) resultA[1];
 
             Object resultB[] = sortAndCount(B);
-            ++inversionCount;
+
             inversionCount += (int) resultB[0];
             B = (int[]) resultB[1];
 
-            // Merge and count on product
-//            System.out.print("A = ");
-//            for (int i = 0; i < A.length; ++i)
-//                System.out.print(A[i]);
-//            System.out.println("");
-//            System.out.print("B = ");
-//            for (int i = 0; i < B.length; ++i)
-//                System.out.print(B[i]);
-//            System.out.println("");
-//
+            // Merge
             Object result[] = mergeAndCount(A,B);
             inversionCount += (int) result[0];
             mergedList = (int[]) result[1];
-//            System.out.print("Merged in sortCount = ");
-//            for (int i = 0; i < mergedList.length; ++i)
-//                System.out.print(mergedList[i]);
-//            System.out.println("");
             Object resultr[] = {inversionCount, mergedList};
             return resultr;
 
@@ -92,7 +79,7 @@ public class Main {
             } else {
                 mergedArr[mergedIndex] = B[indexB];
                 ++indexB;
-                ++numInversions;
+                numInversions += A.length - indexA;
             }
             ++mergedIndex;
         }
@@ -106,10 +93,7 @@ public class Main {
             ++indexB;
             ++mergedIndex;
         }
-//        System.out.print("Merged in Merge = ");
-//        for (int i = 0; i < mergedArr.length; ++i)
-//            System.out.print(mergedArr[i]);
-//        System.out.println("");
+
         Object result[] = new Object[2];
         result[0] = numInversions;
         result[1] = mergedArr;
