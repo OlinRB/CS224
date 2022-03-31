@@ -1,6 +1,9 @@
 // CS224 Spring 2022
 // starter code for Assignment #4
 
+
+//Authors: Olin Ruppert-Bousquet, Nick Hanna
+
 public class Main {
     public static void main(String argv[]) {
 //        Object rtnval[] = testOne();
