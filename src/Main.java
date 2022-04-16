@@ -5,6 +5,7 @@ import java.util.function.BiFunction;
 public class Main {
     public static void main(String[] argv) {
         testOne();
+        //testTwo();
     }
 
     public static float getVal(char c1, char c2) {
@@ -21,7 +22,24 @@ public class Main {
             return 1.0f;
     }
 
-  public static void testOne() {
+    public static void printResults(Aligner aligner) {
+        // Print out cost
+        System.out.print("cost = ");
+        System.out.println(aligner.cost);
+        System.out.println("\nArray:");
+        // Print out mem array
+        for (int i = 0; i < aligner.A.length; ++i) {
+            for (int j = 0; j < aligner.A[i].length; ++j) {
+                System.out.print(aligner.A[i][j]);
+                System.out.print("|");
+            }
+            System.out.println("");
+        }
+    }
+
+
+
+    public static void testOne() {
     // this should produce the following alignment:
     // n-ame
     // mean-
@@ -32,25 +50,15 @@ public class Main {
     BiFunction <Character, Character, Float> alpha = Main::getVal;
     Aligner aligner = new Aligner(alpha, delta);
     float cost = aligner.align(stringA, stringB);
-    // Print out cost
-    System.out.print("cost = ");
-    System.out.println(cost);
-    System.out.println("\nArray:");
-    // Print out mem array
-    for (int i = 0; i < aligner.A.length; ++i) {
-        for (int j = 0; j < aligner.A[i].length; ++j) {
-            System.out.print(aligner.A[i][j]);
-            System.out.print("|");
-        }
-        System.out.println("");
+    // Print results
+    printResults(aligner);
     }
-  }
 
     public static void testTwo() {
         // this should give you the following alignment:
         // mowisthetime-al-lforgoodmen
         // nowisthedimeforall--goodmen
-        // with cost = 13.0
+        // with cost = 13.0 with delta == 2
         String s1 = "nowisthedimeforallgoodmen";
         String s2 = "mowisthetimeallforgoodmen";
         float delta = 2.0f;
@@ -58,8 +66,7 @@ public class Main {
         BiFunction <Character, Character, Float> alpha = Main::getVal;
         Aligner aligner = new Aligner(alpha, delta);
         float cost = aligner.align(s1, s2);
-        System.out.print("cost = ");
-        System.out.println(cost);
+        printResults(aligner);
     }
 
 }
