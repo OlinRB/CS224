@@ -2,6 +2,8 @@
 
 import java.util.function.BiFunction;
 
+// Authors: Olin Ruppert-Bousquet, Nick Hanna
+
 public class Main {
     public static void main(String[] argv) {
         testOne();

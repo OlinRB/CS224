@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.util.function.BiFunction;
 
+// Authors: Olin Ruppert-Bousquet, Nick Hanna
+
 public class Aligner {
 
 	// 2D Array
