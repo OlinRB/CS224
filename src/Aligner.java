@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.function.BiFunction;
 
 // Authors: Olin Ruppert-Bousquet, Nick Hanna
