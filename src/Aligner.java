@@ -106,17 +106,17 @@ public class Aligner {
 		switch (case_switch) {
 			// Case for aligned chars
 			// Print corresponding chars aligned
-			case 1 -> {
+			case (1) : {
 				System.out.println(stringA.charAt(i - 1) + " aligns with " + stringB.charAt(j - 1));
 				return traceback(i - 1, j - 1);
 			}
 			// Case for right gap
-			case 2 -> {
+			case (2) : {
 				System.out.println(stringA.charAt(i - 1) + " aligns with -");
 				return traceback(i - 1, j);
 			}
 			// Case for left gap
-			case 3 -> {
+			case (3) : {
 				System.out.println("- aligns with " + stringB.charAt(j - 1));
 				return traceback(i, j - 1);
 			}
