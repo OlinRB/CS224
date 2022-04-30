@@ -164,22 +164,36 @@ public class Graph {
     for (Node node: nodes) {
         int inFlow = 0;
         int outFlow = 0;
+        int sourceFlow = 0;
+        int drainFlow = 0;
 
-        // Add flows
-        if (node != s && node != t) {
-            for (Edge edge: node.adjlist) {
-                if (edge.n1 == node)
-                    outFlow += edge.flow;
-                if (edge.n2 == node)
-                    inFlow += edge.flow;
-            }
+        // Add flows to in/out if node != s or t
+        // Add flows to s and t
+        // Check cap vs flow
+
+        for (Edge edge: node.adjlist) {
+            if (edge.n1 == node && (node != s || node != t))
+                outFlow += edge.flow;
+            if (edge.n2 == node && (node != s || node != t))
+                inFlow += edge.flow;
+            if (edge.n1 == s)
+                sourceFlow += edge.flow;
+            if (edge.n2 == t)
+                drainFlow += edge.flow;
+            if (edge.flow > edge.capacity)
+                return false;
         }
-      System.out.print("Flow into: ");
-      System.out.print(inFlow);
-      System.out.print(" Flow out: ");
-      System.out.println(outFlow);
+
+//      System.out.print("Flow into: ");
+//      System.out.print(inFlow);
+//      System.out.print(" Flow out: ");
+//      System.out.println(outFlow);
+        // If flows dont match return false
         if (inFlow != outFlow)
           return false;
+        if (sourceFlow != drainFlow)
+          return false;
+        // If flow exceed capacity return false
     }
 
 
@@ -199,17 +213,19 @@ public class Graph {
         if (edge.flow < edge.capacity) {
           // Add leftover units of cap
           node.addResidualEdge((new Edge(edge.n1, edge.n2, edge.capacity - edge.flow, false)));
-        }
-      }
-    }
-    // Add backward edges
-    for (Node node : nodes) {
-      for (Edge edge : node.adjlist) {
-        if (edge.flow > 0) {
+        if (edge.flow > 0)
           node.addResidualEdge((new Edge(edge.n2, edge.n1, edge.flow, true)));
         }
       }
     }
+//    // Add backward edges
+//    for (Node node : nodes) {
+//      for (Edge edge : node.adjlist) {
+//        if (edge.flow > 0) {
+//          node.addResidualEdge((new Edge(edge.n2, edge.n1, edge.flow, true)));
+//        }
+//      }
+//    }
   }// constructResidualGraph()
 
   //=========================================================
