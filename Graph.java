@@ -162,6 +162,7 @@ public class Graph {
     // check conservation condition at each internal node
 
     // implement this
+    return true;
   } // checkFlow()
 
   //=========================================================
@@ -180,6 +181,7 @@ public class Graph {
 
   private int findBottleneck(ArrayList<Edge> path) {
     // implement this
+    return 1;
   } // findBottleneck()
 
   //=========================================================
@@ -191,10 +193,33 @@ public class Graph {
   //=========================================================
 
   public int maxFlow(Node s, Node t) {
-    // implement this
+    // s == source, t == sink
 
+    // Set all e = 0
+    for (Node node : nodes) {
+      for (Edge edge: node.adjlist) {
+        edge.flow = 0;
+      }
+    }
+    // Find P -> s-t path in resid
+    ArrayList<Edge> P = findPathInResid(s,t);
+
+    // While path exists from s-t in resid graph
+    while (P.size() != 0) {
+      // Augment
+      augment(P);
+      constructResidualGraph();
+      P = findPathInResid(s,t);
+
+    }
+    // Init flow
+    int flow = 0;
+    // Find flow
+    for (Edge edge: s.adjlist) {
+      flow += edge.flow;
+    }
     System.out.println("max flow is " + flow);
 
     return flow;
-  } // maxFlow()
+  }
 }

@@ -63,8 +63,8 @@ public class Main {
     G.addEdge(n3, n5,  2,  0);
     G.addEdge(n4, n5, 10,  0);
 
-    G.print();
-    G.checkFlow(n1, n5);
+    //G.print();
+    //G.checkFlow(n1, n5);
 
     G.maxFlow(n1, n5);
     G.print();
