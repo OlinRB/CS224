@@ -159,17 +159,58 @@ public class Graph {
 
   public boolean checkFlow(Node s, Node t) {
     // check that flow out of s == flow into t
-    // check conservation condition at each internal node
+    // check conservation condition at each internal node -> For each node v other than s and t,
+    // Make sure e1.flow == e2.flow
+    for (Node node: nodes) {
+        int inFlow = 0;
+        int outFlow = 0;
 
-    // implement this
+        // Add flows
+        if (node != s && node != t) {
+            for (Edge edge: node.adjlist) {
+                if (edge.n1 == node)
+                    outFlow += edge.flow;
+                if (edge.n2 == node)
+                    inFlow += edge.flow;
+            }
+        }
+      System.out.print("Flow into: ");
+      System.out.print(inFlow);
+      System.out.print(" Flow out: ");
+      System.out.println(outFlow);
+        if (inFlow != outFlow)
+          return false;
+    }
+
+
     return true;
   } // checkFlow()
 
   //=========================================================
 
   private void constructResidualGraph() {
-    // undergrads should implement this
-  } // constructResidualGraph()
+    // Clear adj resid
+    for (Node node : nodes) {
+      node.adjlistResid.clear();
+    }
+    // Add forward edges
+    for (Node node : nodes) {
+      for (Edge edge : node.adjlist) {
+        if (edge.flow < edge.capacity) {
+          // Add leftover units of cap
+          node.addResidualEdge((new Edge(edge.n1, edge.n2, edge.capacity - edge.flow, false)));
+        }
+      }
+    }
+    // Add backward edges
+    for (Node node : nodes) {
+      for (Edge edge : node.adjlist) {
+        if (edge.flow > 0) {
+          node.addResidualEdge((new Edge(edge.n2, edge.n1, edge.flow, true)));
+        }
+      }
+    }
+  }// constructResidualGraph()
 
   //=========================================================
 
