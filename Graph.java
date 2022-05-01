@@ -261,23 +261,23 @@ public class Graph {
     endfor
     return f
     */
+    // Find bn
     int b = findBottleneck(path);
-    Node v, u;
-    Edge indEdge = null;
+    Edge targetEdge = null;
+    // Find e = (u, v)
     for (Edge edge1: path) {
-      v = edge1.n2;
-      u = edge1.n1;
-      for (Edge edge2: u.adjlist) {
-        if (edge2.n2 == v) {
-          indEdge = edge2;
-          break;
+      for (Edge edge2: edge1.n1.adjlist) {
+        if (edge2.n2 == edge1.n2) {
+          targetEdge = edge2;
         }
       }
+      // Add if backwards
       if (!edge1.backward) {
-        indEdge.flow += b;
-      } 
+        targetEdge.flow += b;
+      }
+      // Else subtract
       else {
-        indEdge.flow -= b;
+        targetEdge.flow -= b;
       } 
     } 
   }
