@@ -90,32 +90,32 @@ public class Graph {
 
     Stack<Node> stack = new Stack<Node>();
     boolean explored[] = new boolean[1 + this.nodes.size()];
-    int parent[] = new int[1+this.nodes.size()];
+    int parent[] = new int[1 + this.nodes.size()];
 
-    for (i=0; i<=this.nodes.size(); ++i)
+    for (i = 0; i <= this.nodes.size(); ++i)
       explored[i] = false;
 
     done = false;
     stack.push(s);
-    while ( ! done && ! stack.empty() ) {
+    while (!done && !stack.empty()) {
       n1 = stack.pop();
-      if ( ! explored[n1.name] ) {
+      if (!explored[n1.name]) {
         explored[n1.name] = true;
-        System.out.println("explore: " + n1.name);
+//P     System.out.println("explore: " + n1.name);
         if (parent[n1.name] != 0)
           System.out.println("tree: " + n1.name + " -> " + parent[n1.name]);
-        System.out.println("set explored [" + n1.name + "] to true");
-        for (Edge edge: n1.adjlistResid) {
+//P     System.out.println("set explored [" + n1.name + "] to true");
+        for (Edge edge : n1.adjlistResid) {
           n2 = edge.n2;
-          if ( ! explored[n2.name] ) {
-            System.out.println("add edge from " + n1.name + " to " + n2.name);
-            System.out.println("discover: " + n2.name);
+          if (!explored[n2.name]) {
+//P         System.out.println("add edge from " + n1.name + " to " + n2.name);
+//P         System.out.println("discover: " + n2.name);
             stack.push(n2);
             parent[n2.name] = n1.name;
             if (n2.name == t.name)
               done = true;
-          } else {
-            System.out.println("have already explored " + n2.name);
+//P       } else {
+//P         System.out.println("have already explored " + n2.name);
           }
         }
       }
@@ -124,7 +124,7 @@ public class Graph {
     System.out.println("here's the backward path from " + t.name);
     done = false;
     idx = t.name;
-    while ( ! done ) {
+    while (!done) {
       if (parent[idx] == 0)
         done = true;
       else {
@@ -132,7 +132,7 @@ public class Graph {
         // find the edge from parent[idx] to idx
         found = false;
         k = 0;
-        while ( ! found && k < nodes.size()) {
+        while (!found && k < nodes.size()) {
           if (nodes.get(k).name == parent[idx])
             found = true;
           else
@@ -140,9 +140,9 @@ public class Graph {
         }
         n1 = nodes.get(k);
         found = false;
-        for (Edge e: n1.adjlistResid) {
+        for (Edge e : n1.adjlistResid) {
           if (e.n2.name == idx) {
-            System.out.println("found edge from " + parent[idx] + " to " + idx + " " + e);
+//P         System.out.println("found edge from " + parent[idx] + " to " + idx + " " + e);
             path.add(e);
             found = true;
           }
@@ -153,7 +153,7 @@ public class Graph {
 
     System.out.println();
     return path;
-  } // findPathInResid()
+  }
 
   //==============================================================
 
@@ -212,12 +212,18 @@ public class Graph {
       for (Edge edge : node.adjlist) {
         if (edge.flow < edge.capacity) {
           // Add leftover units of cap
+          Edge newEdge = new Edge(edge.n1, edge.n2, edge.capacity - edge.flow, false);
           node.addResidualEdge((new Edge(edge.n1, edge.n2, edge.capacity - edge.flow, false)));
-        if (edge.flow > 0)
+          System.out.println(newEdge + "; create forward edge");
+        }
+        if (edge.flow > 0) {
+          Edge newEdge = new Edge(edge.n2, edge.n1, edge.flow, true);
           node.addResidualEdge((new Edge(edge.n2, edge.n1, edge.flow, true)));
+          System.out.println(newEdge + "; create backward edge");
         }
       }
     }
+    printResidual();
   }// constructResidualGraph()
 
   //=========================================================
@@ -243,42 +249,9 @@ public class Graph {
   //=========================================================
 
   private void augment(ArrayList<Edge> path) {
-  /*
-  augment(f , P)
-    Let b = bottleneck(P, f)
-    For each edge (u, v) ∈ P
-      If e = (u, v) is a forward edge then
-        increase f(e) in G by b
-        The Maximum-Flow Problem and the Ford-Fulkerson Algorithm 
-      Else ((u, v) is a backward edge, and let e = (v, u))
-        decrease f(e) in G by b
-      Endif
-    Endfor
-    Return(f)
-  */
 
-  int b = this.findBottleneck(path); 
-  Node u, v;
-  Edge indEdge = null;
-  for (Edge loopEdge: path){
-    u = loopEdge.n1;
-    v = loopEdge.n2;
-    for (Edge loopEdge2: u.adjlist){
-      if (loopEdge2.n2 == v){
-        indEdge = loopEdge2;
-        break;
-      }
-    }
-    if (loopEdge.backward != true){
-      indEdge.flow += b;
-      System.out.println("forward edge " + loopEdge.n1.name + " -> " + loopEdge.n2.name + ": increased by " + b);
-    } 
-    else {
-      indEdge.flow -= b;
-      System.out.println("backward edge " + loopEdge.n1.name + " -> " + loopEdge.n2.name + ": decreased by " + b);
-    } 
-  } 
-  } 
+  }
+
 
   //=========================================================
 
@@ -291,16 +264,34 @@ public class Graph {
         edge.flow = 0;
       }
     }
+    // Construct resid
+    constructResidualGraph();
     // Find P -> s-t path in resid
     ArrayList<Edge> P = findPathInResid(s,t);
 
     // While path exists from s-t in resid graph
-    while (P.size() != 0) {
+    int i = 0;
+    while (P.size() > 0) {
+      ++i;
       // Augment
+//      System.out.println("\n\nEdges before augment:");
+//      for (Edge edge: P) {
+//        System.out.println(edge);
+//        System.out.println(edge.flow);
+//      }
       augment(P);
+      //System.out.println("\nEdges after augment:");
+//      for (Edge edge: P) {
+//        System.out.println(edge);
+//        System.out.println(edge.flow);
+//      }
+//      System.out.println("Graph after augmenting");
+      System.out.println("Here is the residual graph");
+      print();
+      System.out.println("----------------------------------");
+      System.out.println("Building residual graph: ");
       constructResidualGraph();
       P = findPathInResid(s,t);
-
     }
     // Init flow
     int flow = 0;
@@ -309,6 +300,7 @@ public class Graph {
       flow += edge.flow;
     }
     System.out.println("max flow is " + flow);
+    //System.out.println("\n\ninside loop\n\n");
 
     return flow;
   }
