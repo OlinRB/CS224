@@ -184,10 +184,10 @@ public class Graph {
                 return false;
         }
 
-        System.out.print("Flow into: ");
-        System.out.print(inFlow);
-        System.out.print(" Flow out: ");
-        System.out.println(outFlow);
+//        System.out.print("Flow into: ");
+//        System.out.print(inFlow);
+//        System.out.print(" Flow out: ");
+//        System.out.println(outFlow);
         // If flows dont match return false
         if (inFlow != outFlow)
           return false;
@@ -218,14 +218,6 @@ public class Graph {
         }
       }
     }
-//    // Add backward edges
-//    for (Node node : nodes) {
-//      for (Edge edge : node.adjlist) {
-//        if (edge.flow > 0) {
-//          node.addResidualEdge((new Edge(edge.n2, edge.n1, edge.flow, true)));
-//        }
-//      }
-//    }
   }// constructResidualGraph()
 
   //=========================================================
@@ -240,12 +232,9 @@ public class Graph {
     
     int bottleNeckValue = Integer.MAX_VALUE;
 
-    for (Node node: this.nodes) {
-      for (Edge edge: node.adjlistResid) {
-          if ( edge.capacity <= bottleNeckValue ) {
-            bottleNeckValue = edge.capacity;
-          } 
-      } 
+    for (Edge edge: path) {
+        if (!edge.backward)
+          bottleNeckValue = Math.min(bottleNeckValue, edge.capacity);
     } 
     System.out.println("Bottlekneck Value is: " + bottleNeckValue);
     return bottleNeckValue;
@@ -282,9 +271,11 @@ public class Graph {
     }
     if (loopEdge.backward != true){
       indEdge.flow += b;
+      System.out.println("forward edge " + loopEdge.n1.name + " -> " + loopEdge.n2.name + ": increased by " + b);
     } 
     else {
       indEdge.flow -= b;
+      System.out.println("backward edge " + loopEdge.n1.name + " -> " + loopEdge.n2.name + ": decreased by " + b);
     } 
   } 
   } 

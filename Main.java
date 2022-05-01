@@ -17,6 +17,7 @@ public class Main {
     Node n3 = new Node(3);
     Node n4 = new Node(4);
 
+    //GraphExampleA G = new GraphExampleA();
     Graph G = new Graph();
     G.addNode(n1);
     G.addNode(n2);
