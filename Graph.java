@@ -249,9 +249,38 @@ public class Graph {
   //=========================================================
 
   private void augment(ArrayList<Edge> path) {
-
+    /*
+    augment(f,P)
+    let b = bottleneck(P,f)
+    for e = (u,v) in P
+      if e = (u,v) is forward
+        increase f(e) in G by b
+      else (u,v) is backward let e = (v,u)
+        decrease f(e) in G by b
+      endif
+    endfor
+    return f
+    */
+    int b = findBottleneck(path);
+    Node v, u;
+    Edge indEdge = null;
+    for (Edge edge1: path) {
+      v = edge1.n2;
+      u = edge1.n1;
+      for (Edge edge2: u.adjlist) {
+        if (edge2.n2 == v) {
+          indEdge = edge2;
+          break;
+        }
+      }
+      if (!edge1.backward) {
+        indEdge.flow += b;
+      } 
+      else {
+        indEdge.flow -= b;
+      } 
+    } 
   }
-
 
   //=========================================================
 
