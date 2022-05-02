@@ -213,12 +213,12 @@ public class Graph {
         if (edge.flow < edge.capacity) {
           // Add leftover units of cap
           Edge newEdge = new Edge(edge.n1, edge.n2, edge.capacity - edge.flow, false);
-          node.addResidualEdge((new Edge(edge.n1, edge.n2, edge.capacity - edge.flow, false)));
+          node.addResidualEdge(newEdge);
           System.out.println(newEdge + "; create forward edge");
         }
         if (edge.flow > 0) {
           Edge newEdge = new Edge(edge.n2, edge.n1, edge.flow, true);
-          node.addResidualEdge((new Edge(edge.n2, edge.n1, edge.flow, true)));
+          node.addResidualEdge(newEdge);
           System.out.println(newEdge + "; create backward edge");
         }
       }
@@ -242,7 +242,7 @@ public class Graph {
         if (!edge.backward)
           bottleNeckValue = Math.min(bottleNeckValue, edge.capacity);
     } 
-    System.out.println("Bottlekneck Value is: " + bottleNeckValue);
+    System.out.println("Bottleneck Value is: " + bottleNeckValue);
     return bottleNeckValue;
   } // findBottleneck()
 
@@ -299,9 +299,7 @@ public class Graph {
     ArrayList<Edge> P = findPathInResid(s,t);
 
     // While path exists from s-t in resid graph
-    int i = 0;
     while (P.size() > 0) {
-      ++i;
       // Augment
 //      System.out.println("\n\nEdges before augment:");
 //      for (Edge edge: P) {
@@ -318,7 +316,7 @@ public class Graph {
       System.out.println("Here is the residual graph");
       print();
       System.out.println("----------------------------------");
-      System.out.println("Building residual graph: ");
+      System.out.println("Residual Graph: ");
       constructResidualGraph();
       P = findPathInResid(s,t);
     }
@@ -329,7 +327,6 @@ public class Graph {
       flow += edge.flow;
     }
     System.out.println("max flow is " + flow);
-    //System.out.println("\n\ninside loop\n\n");
 
     return flow;
   }
