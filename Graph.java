@@ -1,6 +1,8 @@
 // CS224 Spring 2022
 // jdh 4/9/22
 
+// Authors: Olin Ruppert-Bousquet, Nick Hanna
+
 import java.util.ArrayList;
 import java.util.Queue;
 import java.util.Stack;
