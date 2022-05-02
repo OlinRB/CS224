@@ -190,12 +190,12 @@ public class Graph {
 //        System.out.print(inFlow);
 //        System.out.print(" Flow out: ");
 //        System.out.println(outFlow);
-        // If flows dont match return false
+        // If flows != return false
         if (inFlow != outFlow)
           return false;
         if (sourceFlow != drainFlow)
           return false;
-        // If flow exceed capacity return false
+        // If flow > cap return false
     }
 
 
@@ -251,23 +251,12 @@ public class Graph {
   //=========================================================
 
   private void augment(ArrayList<Edge> path) {
-    /*
-    augment(f,P)
-    let b = bottleneck(P,f)
-    for e = (u,v) in P
-      if e = (u,v) is forward
-        increase f(e) in G by b
-      else (u,v) is backward let e = (v,u)
-        decrease f(e) in G by b
-      endif
-    endfor
-    return f
-    */
     // Find bn
     int b = findBottleneck(path);
     Edge targetEdge = null;
     // Find e = (u, v)
     for (Edge edge1: path) {
+      // Find target edge
       for (Edge edge2: edge1.n1.adjlist) {
         if (edge2.n2 == edge1.n2) {
           targetEdge = edge2;
@@ -314,11 +303,9 @@ public class Graph {
 //        System.out.println(edge);
 //        System.out.println(edge.flow);
 //      }
-//      System.out.println("Graph after augmenting");
-      System.out.println("Here is the residual graph");
+      System.out.println("Graph after augmenting");
       print();
-      System.out.println("----------------------------------");
-      System.out.println("Residual Graph: ");
+      System.out.println("------------Residual Graph--------------");
       constructResidualGraph();
       P = findPathInResid(s,t);
     }
